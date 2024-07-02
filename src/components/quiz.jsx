@@ -39,17 +39,29 @@ export default function Quiz() {
         { answer: "Cascading System Sheets", correct: false }
       ]
     },
+    {
+      id: 4,
+      question: "¿Qué significa CSS en desarrollo web?",
+      description: "Selecciona la respuesta correcta.",
+      options: [
+        { answer: "Cascading Style Sheets", correct: true },
+        { answer: "Creative Style Sheets", correct: false },
+        { answer: "Computer Style Sheets", correct: false },
+        { answer: "Cascading System Sheets", correct: false }
+      ]
+    },
 
   ];
 
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
 
   const fetcData = () => {
-    return axios.get("http://localhost:3000/api/preguntas")
+    return axios.get("http://localhost:8080/api/preguntas")
     .then((response) => setData(response.data));
   }
-  
-
+  useEffect(()=>{
+    fetcData();
+  },[data])
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -65,25 +77,24 @@ export default function Quiz() {
 
   return (
     <div className="container">
-      <h1>{questions[currentQuestion].question}</h1>
+      <h1>{data?.[currentQuestion]?.text}</h1>
       <hr />
-      <h2>{questions[currentQuestion].description}</h2>
       <ul>
-        {questions[currentQuestion].options.map((option, index) => (
+        {data?.[currentQuestion]?.answers?.map((option, index) => (
           <li key={index} onClick={() => handleOptionClick(index)}>
-            {option.answer}
+            {option?.text}
             {selectedOption !== null && selectedOption === index && (
-              option.correct ? <span className="correct">✔</span> : <span className="incorrect">❌</span>
+              option?.correcta ? <span className="correct">✔</span> : <span className="incorrect">❌</span>
             )}
           </li>
         ))}
       </ul>
-      {currentQuestion < questions.length - 1 ? (
+      {currentQuestion < data?.length - 1 ? (
         <button onClick={handleNextQuestion}>Siguiente</button>
       ) : (
         <button>Terminar</button>
       )}
-      <div className="index">{currentQuestion + 1}/{questions.length}</div>
+      <div className="index">{currentQuestion + 1}/{data?.length}</div>
     </div>
   );
 }
