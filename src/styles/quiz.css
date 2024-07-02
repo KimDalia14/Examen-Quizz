@@ -1,0 +1,62 @@
+.container {
+    width: 100%; /* Ocupa todo el ancho disponible del contenedor padre */
+    max-width: 640px; /* Ancho máximo del contenedor */
+    margin: auto; /* Centra horizontalmente el contenedor */
+    margin-top: 150px;
+    background: white;
+    color: #262626;
+    padding: 20px; /* Reducido el espacio interno */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    text-align: center; /* Alinea el texto al centro */
+  }
+  
+  .container hr {
+    height: 2px;
+    border: none;
+    background: #707070;
+    margin: 20px 0; /* Espacio alrededor de la línea */
+  }
+  
+  .container h2 {
+    font-size: 24px; /* Reducido el tamaño de fuente */
+    font-weight: 500;
+    margin-bottom: 10px; /* Espacio inferior */
+  }
+  
+  .container ul {
+    list-style-type: none; /* Quita los puntos de la lista */
+    padding: 0;
+  }
+  
+  .container ul li {
+    margin-bottom: 15px; /* Espacio vertical entre las respuestas aumentado */
+    height: 50px; /* Reducida la altura de los elementos de la lista */
+    display: flex;
+    align-items: center;
+    padding-left: 10px; /* Ajustado el espacio interno */
+    border: 1px solid #686868;
+    border-radius: 8px;
+    font-size: 18px; /* Reducido el tamaño de fuente */
+    cursor: pointer;
+  }
+  
+  .container button {
+    width: 100%; /* Toma el ancho completo del contenedor padre */
+    max-width: 250px; /* Ancho máximo del botón */
+    height: 50px; /* Reducida la altura del botón */
+    background: #553f9a;
+    color: #fff;
+    font-size: 20px; /* Reducido el tamaño de fuente */
+    font-weight: 500;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: auto; /* Centra horizontalmente el botón */
+  }
+  
+  .container .index {
+    font-size: 16px; /* Reducido el tamaño de fuente */
+    margin-top: 20px; /* Espacio superior */
+  }
+  
