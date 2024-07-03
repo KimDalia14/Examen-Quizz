@@ -37,12 +37,13 @@
     border-radius: 5px;
     border: none;
     width: 180px;
-    background-color: hsl(266, 100%, 87%);
+    background-color:#553f9a;
+    color: #ffffff;
     transition: background-color 0.3s, color 0.3s;
   }
   .container-button button:hover{
     background-color: #f1dcff; /* Color de fondo al hacer hover */
-    color: #000000
+    color: black;
   }
   
   

@@ -1,100 +1,124 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import "../styles/quiz.css";
 import axios from 'axios';
+const handleClick = () => {
+  window.location.href = '/rulesPage';
+};
 
 export default function Quiz() {
-  
-   //MIENTRAS QUE NO HAYA API XDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-  const questions = [
-    {
-      id: 1,
-      question: "¿Qué es un bucle for?",
-      description: "Selecciona la opción correcta.",
-      options: [
-        { answer: "Una estructura de control que se repite un número determinado de veces.", correct: true },
-        { answer: "Una función que no acepta parámetros.", correct: false },
-        { answer: "Un operador utilizado para comparar valores.", correct: false },
-        { answer: "Un tipo de dato en JavaScript.", correct: false }
-      ]
-    },
-    {
-      id: 2,
-      question: "¿Qué es JSON?",
-      description: "Elige la respuesta correcta.",
-      options: [
-        { answer: "Un lenguaje de programación orientado a objetos.", correct: false },
-        { answer: "Un formato de intercambio de datos ligero.", correct: true },
-        { answer: "Una función incorporada en JavaScript para manejar errores.", correct: false },
-        { answer: "Un método de cifrado de datos en redes.", correct: false }
-      ]
-    },
-    {
-      id: 3,
-      question: "¿Qué significa CSS en desarrollo web?",
-      description: "Selecciona la respuesta correcta.",
-      options: [
-        { answer: "Cascading Style Sheets", correct: true },
-        { answer: "Creative Style Sheets", correct: false },
-        { answer: "Computer Style Sheets", correct: false },
-        { answer: "Cascading System Sheets", correct: false }
-      ]
-    },
-    {
-      id: 4,
-      question: "¿Qué significa CSS en desarrollo web?",
-      description: "Selecciona la respuesta correcta.",
-      options: [
-        { answer: "Cascading Style Sheets", correct: true },
-        { answer: "Creative Style Sheets", correct: false },
-        { answer: "Computer Style Sheets", correct: false },
-        { answer: "Cascading System Sheets", correct: false }
-      ]
-    },
-
-  ];
-
   const [data, setData] = useState(null);
-
-  const fetcData = () => {
-    return axios.get("http://localhost:8080/api/preguntas")
-    .then((response) => setData(response.data));
-  }
-  useEffect(()=>{
-    fetcData();
-  },[data])
-
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
+  const [timeLeft, setTimeLeft] = useState(15);
+  const [timeUp, setTimeUp] = useState(false);
+  const [score, setScore] = useState(0);
+  const timerRef = useRef(null);
+
+  const fetchData = () => {
+    return axios.get("http://localhost:8080/api/preguntas")
+      .then((response) => setData(response.data))
+      .catch((error) => console.error("Error fetching data:", error));
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []); 
+
+  useEffect(() => {
+    if (currentQuestion >= 10) return;
+
+    if (timeLeft === 0) {
+      setTimeUp(true);
+      handleOptionClick(-1); 
+    }
+
+    timerRef.current = setInterval(() => {
+      setTimeLeft((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
+    }, 1000);
+
+    return () => clearInterval(timerRef.current);
+  }, [timeLeft, currentQuestion]);
 
   const handleOptionClick = (index) => {
-    setSelectedOption(index);
+    if (selectedOption === null) {
+      setSelectedOption(index);
+      clearInterval(timerRef.current); 
+      if (index !== -1 && data[currentQuestion].answers[index].correcta) {
+        setScore((prevScore) => prevScore + 1); 
+      }
+    }
   };
 
   const handleNextQuestion = () => {
-    setCurrentQuestion(currentQuestion + 1);
+    if (currentQuestion < 9) {
+      setCurrentQuestion((prevQuestion) => prevQuestion + 1);
+      setSelectedOption(null);
+      setTimeLeft(15);
+      setTimeUp(false);
+    } else {
+      setCurrentQuestion(10);
+      setTimeLeft(0);
+    }
+  };
+
+  const handleRestartQuiz = () => {
+    setCurrentQuestion(0);
     setSelectedOption(null);
+    setTimeLeft(15);
+    setTimeUp(false);
+    setScore(0);
+  };
+
+  const getResultMessage = () => {
+    if (score === 10) return '¡Felicidades sacaste 10 de 10 aciertos has estudiado bien! 😊🥳';
+    if (score === 9) return '¡Felicidades sacaste 9 de 10 aciertos has estudiado bien! 😊🥳';
+    if (score >= 8) return '¡Sacaste 8 de 10 aciertos. Hay que mejorar un poquito, pero vas bien! ☺️';
+    if (score >= 7) return '¡Sacaste 7 de 10 aciertos. Hay que mejorar un poquito, pero vas bien! ☺️';
+    if (score >= 6) return '¡Sacaste 6 de 10 aciertos. Échale más ganas para la próxima 😅';
+    if (score >= 5) return '¡Sacaste 5 de 10 aciertos. ¿Qué pasó? Hay que estudiar más 🙂';
+    if (score >= 4) return '¡Sacaste 4 de 10 aciertos. ¿Qué pasó? Hay que estudiar más 🙂';
+    if (score >= 3) return '¡Sacaste 3 de 10 aciertos. Muy mal, inténtalo de nuevo!! ☹️';
+    if (score >= 2) return '¡Sacaste 2 de 10 aciertos. Muy mal, inténtalo de nuevo!! ☹️';
+    return '¡Sacaste 1 de 10 aciertos. Muy mal, inténtalo de nuevo!! ☹️';
   };
 
   return (
     <div className="container">
-      <h1>{data?.[currentQuestion]?.text}</h1>
-      <hr />
-      <ul>
-        {data?.[currentQuestion]?.answers?.map((option, index) => (
-          <li key={index} onClick={() => handleOptionClick(index)}>
+      {currentQuestion < 10 ? (
+        <>
+          <h1>{data?.[currentQuestion]?.text}</h1>
+          <hr />
+          <ul>
+            {data?.[currentQuestion]?.answers?.map((option, index) => (
+             <li 
+             key={index} 
+             onClick={() => handleOptionClick(index)}
+             className={
+              selectedOption !== null && selectedOption === index 
+              ? option?.correcta ? 'correct' : 'incorrect' : 'option' }
+            >
             {option?.text}
-            {selectedOption !== null && selectedOption === index && (
-              option?.correcta ? <span className="correct">✔</span> : <span className="incorrect">❌</span>
-            )}
-          </li>
-        ))}
-      </ul>
-      {currentQuestion < data?.length - 1 ? (
-        <button onClick={handleNextQuestion}>Siguiente</button>
+            </li>
+            ))}
+          </ul>
+          {(selectedOption !== null || timeUp) && (
+            <button onClick={handleNextQuestion}>Siguiente</button>
+          )}
+          <div className="index">{currentQuestion + 1}/{data?.length}</div>
+          <div className="timer">Tiempo restante: {timeLeft}s</div>
+        </>
       ) : (
-        <button>Terminar</button>
+        <div>
+          <h1>¡Has completado el cuestionario!</h1>
+          <h2>Tu puntuación: {score} / 10</h2>
+          <p>{getResultMessage()}</p>
+          <div className='container-button'>
+            <button onClick={handleRestartQuiz}>Repetir Quiz</button>
+            <button onClick={handleClick}>Regresar</button>
+        </div>
+        </div>
       )}
-      <div className="index">{currentQuestion + 1}/{data?.length}</div>
     </div>
   );
 }
+

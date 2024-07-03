@@ -1,9 +1,9 @@
 .container {
-    width: 100%; /* Ocupa todo el ancho disponible del contenedor padre */
+    width: 100%; 
     max-width: 640px; /* Ancho máximo del contenedor */
     margin: auto; /* Centra horizontalmente el contenedor */
-    margin-top: 150px;
-    background: white;
+    margin-top: 90px;
+    background: rgb(225, 225, 225);
     color: #262626;
     padding: 20px; /* Reducido el espacio interno */
     border-radius: 10px;
@@ -54,9 +54,38 @@
     cursor: pointer;
     margin: auto; /* Centra horizontalmente el botón */
   }
+.container-button {
+  margin: 20px;
+}
+.container-button button {
+  margin: 10px;
+}
   
   .container .index {
     font-size: 16px; /* Reducido el tamaño de fuente */
     margin-top: 20px; /* Espacio superior */
   }
-  
+
+/* quiz.css */
+.disabled {
+  pointer-events: none; /* Deshabilita la interacción */
+  opacity: 0.6; /* Reduce la opacidad para indicar que está deshabilitado */
+}
+.correct {
+  background-color: rgb(72, 196, 72);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.incorrect {
+  background-color: rgba(243, 63, 63, 0.944);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.option.disabled {
+  pointer-events: none;
+  opacity: 0.6;
+}
