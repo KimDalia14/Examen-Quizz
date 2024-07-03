@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
-
   .container-welcome {
     display: flex;
     align-items: center; 
@@ -42,7 +41,7 @@
     transition: background-color 0.3s, color 0.3s;
   }
   .container-button button:hover{
-    background-color: #f1dcff; /* Color de fondo al hacer hover */
+    background-color: #f1dcff; 
     color: black;
   }
   

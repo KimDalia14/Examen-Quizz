@@ -1,58 +1,58 @@
 .container {
     width: 100%; 
-    max-width: 640px; /* Ancho máximo del contenedor */
-    margin: auto; /* Centra horizontalmente el contenedor */
+    max-width: 640px; 
+    margin: auto; 
     margin-top: 90px;
     background: rgb(225, 225, 225);
     color: #262626;
-    padding: 20px; /* Reducido el espacio interno */
+    padding: 20px; 
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
-    text-align: center; /* Alinea el texto al centro */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    text-align: center; 
   }
   
   .container hr {
     height: 2px;
     border: none;
     background: #707070;
-    margin: 20px 0; /* Espacio alrededor de la línea */
+    margin: 20px 0; 
   }
   
   .container h2 {
-    font-size: 24px; /* Reducido el tamaño de fuente */
+    font-size: 24px; 
     font-weight: 500;
-    margin-bottom: 10px; /* Espacio inferior */
+    margin-bottom: 10px; 
   }
   
   .container ul {
-    list-style-type: none; /* Quita los puntos de la lista */
+    list-style-type: none; 
     padding: 0;
   }
   
   .container ul li {
-    margin-bottom: 15px; /* Espacio vertical entre las respuestas aumentado */
-    height: 50px; /* Reducida la altura de los elementos de la lista */
+    margin-bottom: 15px; 
+    height: 50px; 
     display: flex;
     align-items: center;
-    padding-left: 10px; /* Ajustado el espacio interno */
+    padding-left: 10px; 
     border: 1px solid #686868;
     border-radius: 8px;
-    font-size: 18px; /* Reducido el tamaño de fuente */
+    font-size: 18px; 
     cursor: pointer;
   }
   
   .container button {
-    width: 100%; /* Toma el ancho completo del contenedor padre */
-    max-width: 250px; /* Ancho máximo del botón */
-    height: 50px; /* Reducida la altura del botón */
+    width: 100%; 
+    max-width: 250px; 
+    height: 50px; 
     background: #553f9a;
     color: #fff;
-    font-size: 20px; /* Reducido el tamaño de fuente */
+    font-size: 20px; 
     font-weight: 500;
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    margin: auto; /* Centra horizontalmente el botón */
+    margin: auto; 
   }
 .container-button {
   margin: 20px;
@@ -62,14 +62,13 @@
 }
   
   .container .index {
-    font-size: 16px; /* Reducido el tamaño de fuente */
-    margin-top: 20px; /* Espacio superior */
+    font-size: 16px; 
+    margin-top: 20px; 
   }
 
-/* quiz.css */
 .disabled {
-  pointer-events: none; /* Deshabilita la interacción */
-  opacity: 0.6; /* Reduce la opacidad para indicar que está deshabilitado */
+  pointer-events: none; 
+  opacity: 0.6; 
 }
 .correct {
   background-color: rgb(72, 196, 72);
